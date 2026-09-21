@@ -1,0 +1,31 @@
+{% extends 'base.html' %} 
+{% block titulo %}{{ modo }} Livro{% endblock %} 
+{% block conteudo %}     
+    <h2>{{ modo }} Livro</h2>     
+    <form class='formulario' method='post'> 
+    <label>Título:             
+        <input type='text' name='titulo' value='{{ livro.titulo if livro else "" }}' required>         
+    </label>         
+    <label>Ano:             
+        <input type='number' name='ano' value='{{ livro.ano if livro else "" }}'>         
+    </label>         
+    <label>Autor:             
+        <select name='autor_id' required>                 
+            <option value=''>Selecione um autor...</option>                 
+            {% for autor in autores %}                     
+                <option value='{{ autor.id }}'                         
+                    {% if livro and livro.autor_id == autor.id %}                             
+                        selected                         
+                    {% endif %}>                         
+                    {{ autor.nome }}                     
+                </option>                 
+            {% endfor %}             
+        </select>         
+    </label>         
+    <button class='btn btn-primario' type='submit'>Salvar</button>         
+    <a class='btn btn-secundario' href='/livros'>Cancelar</a>     
+    </form>     
+    {% if not autores %}         
+        <p style='color: var(--cor-erro); margin-top: 12px;'>             ⚠ Cadastre pelo menos um autor antes de adicionar livros.         </p>     
+    {% endif %} 
+{% endblock %} 

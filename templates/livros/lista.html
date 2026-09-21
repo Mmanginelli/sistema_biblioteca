@@ -1,0 +1,35 @@
+{% extends 'base.html' %} 
+{% block titulo %}Livros{% endblock %} 
+{% block conteudo %}     
+    <h2>Todos os Livros</h2>     
+    <p><a class='btn btn-primario' href='/livros/novo'>+ Novo Livro</a></p>     
+    {% if not livros %}         
+        <p>Nenhum livro cadastrado.</p>     
+    {% else %}         
+    <table>             
+        <tr>                 
+            <th>Título</th>                 
+            <th>Autor</th>                 
+            <th>Ano</th>                 
+            <th>Ações</th>             
+        </tr>            
+        {% for livro in livros %}             
+        <tr>                 
+            <td>{{ livro.titulo }}</td>                 
+            {# livro.autor acessa o objeto Autor via backref #}                 
+            <td>                     
+                <a href='/livros/autor/{{ livro.autor.id }}'>                         
+                    {{ livro.autor.nome }}                     
+                </a>                 
+            </td>                 
+            <td>{{ livro.ano or '-' }}</td>                 
+            <td>                     
+                <form action='/livros/remover/{{ livro.id }}' method='post' style='display:inline'>                         
+                    <button class='btn btn-perigo' type='submit'>Remover</button> 
+                </form>                 
+            </td>             
+        </tr>             
+        {% endfor %}         
+    </table>     
+    {% endif %} 
+{% endblock %} 

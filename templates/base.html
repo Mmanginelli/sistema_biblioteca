@@ -1,0 +1,28 @@
+{# templates/base.html #} 
+<!DOCTYPE html> 
+<html lang='pt-BR'> 
+<head>     
+    <meta charset='UTF-8'>     
+    <title>{% block titulo %}Biblioteca{% endblock %}</title>     
+    <link rel='stylesheet'           href="{{ url_for('static', filename='css/style.css') }}"> 
+</head> 
+<body>     
+    <header>         
+        <h1>📚 Sistema de Biblioteca</h1>         
+        <nav>             
+            <a href='/autores'>Autores</a>             
+            <a href='/livros'>Livros</a>             
+            <a href='/autores/novo'>+ Autor</a>             
+            <a href='/livros/novo'>+ Livro</a>         
+        </nav>     
+    </header>     
+    <main>         
+        {% with messages = get_flashed_messages(with_categories=true) %}             
+            {% for categoria, mensagem in messages %}                 
+                <div class='flash flash-{{ categoria }}'>{{ mensagem }}</div>             
+            {% endfor %}         
+        {% endwith %}         
+        {% block conteudo %}{% endblock %}     
+    </main> 
+</body> 
+</html> 

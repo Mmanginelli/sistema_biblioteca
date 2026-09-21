@@ -1,0 +1,32 @@
+{% extends 'base.html' %} 
+{% block titulo %}Livros de {{ autor.nome }}{% endblock %} 
+{% block conteudo %}     
+    <h2>Livros de {{ autor.nome }}</h2>     
+    {% if autor.nacionalidade %}         
+        <p>Nacionalidade: {{ autor.nacionalidade }}</p>     
+    {% endif %}     
+    <p>         
+        <a class='btn btn-secundario' href='/livros'>← Todos os livros</a>         
+        <a class='btn btn-primario' href='/livros/novo'>+ Novo Livro</a>     
+    </p>     
+    {% if not livros %}         
+        <p>Nenhum livro cadastrado para este autor.</p>     
+    {% else %}         
+        <table>             
+            <tr>
+                <th>Título</th><th>Ano</th><th>Ações</th></tr>             
+                {% for livro in livros %}             
+                <tr>                 
+                    <td>{{ livro.titulo }}</td>                 
+                    <td>{{ livro.ano or '-' }}</td>                 
+                    <td>                     
+                        <form action='/livros/remover/{{ livro.id }}' method='post' style='display:inline'>                         
+                            <button class='btn btn-perigo' type='submit'>Remover</button>                     
+                        </form>                 
+                    </td>             
+                </tr>             
+                {% endfor %}         
+            </table>         
+        <p>Total: {{ livros | length }} livro(s)</p>     
+    {% endif %} 
+{% endblock %} 

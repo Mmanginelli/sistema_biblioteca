@@ -1,0 +1,49 @@
+{% extends 'base.html' %} 
+{% block titulo %}Início{% endblock %} 
+{% block conteudo %}     
+    <h2>Biblioteca Digital</h2>      
+    
+    {# Contadores #}     
+    <div class='cards'>         
+        <div class='card'>             
+            <div class='numero'>{{ total_autores }}</div>             
+            <div class='label'>Autores cadastrados</div>         
+        </div>         
+        <div class='card'>             
+            <div class='numero'>{{ total_livros }}</div>             
+            <div class='label'>Livros cadastrados</div>         
+        </div>
+    </div>      
+    
+    {# Atalhos de navegação #}     
+    <div class='atalhos'>          
+
+        <div class='atalho-card'>             
+            <h3>📋 Autores</h3>             
+            <a href='/autores'>Ver todos os autores</a>             
+            <a href='/autores/novo'>+ Cadastrar novo autor</a>         
+        </div>         
+
+        <div class='atalho-card'>             
+            <h3>📚 Livros</h3>             
+            <a href='/livros'>Ver todos os livros</a>             
+            <a href='/livros/novo'>+ Cadastrar novo livro</a>         
+        </div>          
+        
+        {# Atalhos por autor — gerados dinamicamente via db.relationship() #}         
+        {% if autores %}         
+        <div class='atalho-card'>             
+            <h3>🔍 Livros por Autor</h3>             
+            {% for autor in autores %}                 
+                <a href='/livros/autor/{{ autor.id }}'>                     
+                    {{ autor.nome }}                     
+                    <span style='color: var(--cor-texto-claro); font-size:0.85rem'>                         
+                        ({{ autor.livros | length }})                     
+                    </span>                 
+                </a>             
+            {% endfor %}         
+        </div>         
+        {% endif %}      
+        
+    </div> 
+{% endblock %}  
